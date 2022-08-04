@@ -55,7 +55,7 @@ const Home = () => {
                 <div className='justify-content-between' style={{ display: "flex", flexWrap: "wrap", width: "150vh", justifyContent: "space-between" }}>
                     {resources?.map((res) => {
                         if (startSearch && searchInput.current != null && (searchInput.current.value.trim() !== "" && searchInput.current.value !== null) && (res.title.toLowerCase()).includes(searchInput.current.value.toLowerCase())) {
-                            console.log(res.title)
+                            
                             return <Card key={res.id} data={res} />
                         }
                         else if (!startSearch) return <Card key={res.id} data={res} />

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import { useTable, usePagination } from 'react-table'
-export default function Table({ columns, data ,handleDelete}) {
+export default function Table({ columns, data, handleDelete }) {
 
-    let nav=useNavigate();
+    let nav = useNavigate();
     const [itemSelected, setItemSelected] = useState(false)
-    let arr = [];
+
+    const [arr, setArr] = useState({ arr: [] })
 
     const {
         getTableProps,
@@ -26,7 +27,7 @@ export default function Table({ columns, data ,handleDelete}) {
         {
             columns,
             data,
-            initialState: { pageIndex: 0, pageSize: 5 },
+            initialState: { pageIndex: 0, pageSize: 6 },
         },
         usePagination
     )
@@ -34,7 +35,7 @@ export default function Table({ columns, data ,handleDelete}) {
 
     return (
         <>
-            <table {...getTableProps()} className={"table"}>
+            <table {...getTableProps()} className={"table table-bordered"}>
                 <thead>
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
@@ -51,19 +52,32 @@ export default function Table({ columns, data ,handleDelete}) {
                             <tr {...row.getRowProps()}>
                                 {row.cells.map(cell => {
                                     if (!isNaN(cell.value)) {
-                                        return <td onClick={e => {
-                                            
-                                            let index = arr.indexOf(e.target.value);
-                                            if (arr.includes(e.target.value) && index >-1) {
-                                                setItemSelected(false)
-                                                arr.splice(index, 1);
+                                        // console.log(cell.value);
+                                        return <td onClick={(e) => {
+                                            if (arr.arr.includes(e.target.value)) {
+                                                setArr({ arr: [arr.arr.filter(x => x !== e.target.value)] })
                                             }
-                                            else{
-                                                
-                                                arr.push(e.target.value)
+                                            else {
+                                                setArr({ arr: [...arr.arr, e.target.value] })
                                             }
-                                            if(arr.length>0) {setItemSelected(true)};
+
+                                            //  if (arr.has(e.target.value)) {
+                                            //     // let index = arr.indexOf(e.target.value);
+
+                                            //     //     arr=arr.splice(index,1);
+                                            //     arr.delete(e.target.value)
+
+
+                                            // }
+                                            // else {
+                                            //     // arr.push(e.target.value);
+                                            //     arr.add(e.target.value)
+                                            // }
+
+                                            if (arr.arr.length > 0) { setItemSelected(true) };
+                                            return
                                         }} {...cell.getCellProps()}>{cell.render('Cell')}</td>
+
                                     }
 
                                     else return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
@@ -76,8 +90,14 @@ export default function Table({ columns, data ,handleDelete}) {
             <div>
 
                 <div>
-                    <button type="button" style={{ backgroundColor: "#2DCA73" }} onClick={e=>nav("/additem")}  disabled={itemSelected} className="btn">ADD ITEM</button>
-                    <button type="button" style={{ backgroundColor: "#FF0B37" }} onClick={()=>{handleDelete(arr); arr=[]}} disabled={!itemSelected} className="btn ">Delete</button>
+                    <button type="button" style={{ backgroundColor: "#2DCA73" }} onClick={e => nav("/additem")} disabled={itemSelected} className="btn">ADD ITEM</button>
+                    <button type="button" style={{ backgroundColor: "#FF0B37" }} onClick={() => {
+                        // console.log(arr.arr);
+                        // return
+                        handleDelete(arr.arr);
+                        setItemSelected(false)
+                        setArr({ arr: [] })
+                    }} disabled={!itemSelected} className="btn ">Delete</button>
                 </div>
                 <div className="pagination" style={{ display: "flex", marginLeft: "60%", justifyContent: "space-around" }}>
                     <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>

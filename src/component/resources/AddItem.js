@@ -20,10 +20,13 @@ const AddItem = () => {
         try {
             let res = await axios.get("https://media-content.ccbp.in/website/react-assignment/add_resource.json", {});
             notify("Item added succesfully!!!")
+            setTimeout(function () {
+                nav(-1);
+            }, 1000);
         } catch (error) {
             notify("Fail to add")
         }
-        nav(-1);
+        
         return
     }
     let nav = useNavigate();
