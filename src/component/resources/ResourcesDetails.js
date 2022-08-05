@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import Table from '../Table'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,9 +14,9 @@ const ResourcesDetails = () => {
     const [loading, setloading] = useState(true);
 
     const filterdata = useRef("");
-    const [Search, setSearch] = useState("");
+    // const [Search, setSearch] = useState("");
     const [flag, setflag] = useState(true);
-    let { id } = useParams();
+    // let { id } = useParams();
     const [temp, settemp] = useState()
     let nav = useNavigate();
     const [resources, setResources] = useState();
@@ -25,7 +25,7 @@ const ResourcesDetails = () => {
         const getResources = async () => {
             try {
 
-                let res = await axios.get(`https://media-content.ccbp.in/website/react-assignment/resource/${id}.json`);
+                let res = await axios.get(`https://media-content.ccbp.in/website/react-assignment/resource/1.json`);
 
                 if (res.status === 200)
                     setResources(res.data)
@@ -180,7 +180,7 @@ const ResourcesDetails = () => {
                         <div style={{ marginLeft: "30px" }} >
                             <h5 className="card-title">{resources?.title}</h5>
                             <h6 className="card-subtitle mb-2 text-muted">{resources?.id}</h6>
-                            <h6 className="card-subtitle mb-2 text-muted"><small><a style={{ textDecoration: "none" }} href={resources?.link} target="_blank">{resources?.link}</a></small></h6>
+                            <h6 className="card-subtitle mb-2 text-muted"><small><a style={{ textDecoration: "none" }} href={resources?.link} rel="noreferrer" target="_blank">{resources?.link}</a></small></h6>
                         </div>
                     </div>
                     <p className="card-text">{resources?.description}</p>
@@ -192,7 +192,7 @@ const ResourcesDetails = () => {
 
 
             <nav className="navbar navbar-light bg-light justify-content-between mt-4">
-                <a className="navbar-brand">Item</a>
+                <p  className="navbar-brand">Item</p>
                 <div className="form-inline d-flex justify-content-start" >
                     <input onClick={e=>{if(  filterdata.current.value!==null && filterdata.current!= null && filterdata.current.value.trim()!==""){
                           
@@ -204,9 +204,9 @@ const ResourcesDetails = () => {
                             // (filterdata.current.value.trim()).toLowerCase().includes
                             setResources({ ...resources, resource_items: resources.resource_items.filter(x => x.title.toLowerCase().includes(filterdata.current.value.trim())) })
                         }
-                    }} ref={filterdata} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" onChange={() => setSearch(filterdata.current.value)} />
+                    }} ref={filterdata} className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"  />
 
-
+{/* onChange={() => setSearch(filterdata.current.value)} */}
 
                     <DropdownButton id="dropdown-basic-button" title="sort" >
                         <Dropdown.Item onClick={e => arrange(1)}>Ascending</Dropdown.Item>

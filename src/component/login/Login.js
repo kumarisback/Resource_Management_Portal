@@ -17,7 +17,7 @@ const Login = (props) => {
       return;
     }
     props.setAuth(true);
-
+    localStorage.setItem("isAuth",true);
     navigate("/")
      return
   };
@@ -36,13 +36,14 @@ const Login = (props) => {
             <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
               <img
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                className="w-full"
+                // className="w-full"
+                style={{width:"500px",height:"400px", margin:"auto"}}
                 alt="Sample image"
               />
             </div>
             <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
               <form onSubmit={(e) => submitHandler(e)} style={{width:"50%" , margin:"auto"}}>
-                <div className="mb-6">
+                <div className="mb-6 m-2">
                   <input
                     type="email"
                     id="email"
@@ -53,7 +54,7 @@ const Login = (props) => {
                   />
                 </div>
 
-                <div className="mb-6">
+                <div className="mb-6 m-2  ">
                   <input
                     type="password"
                     className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -72,8 +73,8 @@ const Login = (props) => {
                   >
                     Login
                   </button> */}
-                  <Button  onClick={submitHandler}
-                    type="button" variant="primary">Login</Button>{' '}
+                  <Button className="m-1"  onClick={submitHandler}
+                    type="submit" variant="primary">Login</Button>{' '}
 
                   
                 </div>

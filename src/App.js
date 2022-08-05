@@ -1,6 +1,6 @@
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import {
   BrowserRouter,
@@ -17,7 +17,9 @@ import AddItem from './component/resources/AddItem';
 import Login from './component/login/Login';
 import ContextApi from './component/context/ContextApi'
 import ProtectedRoute from './component/ProtectedRoute';
+import Image from 'react-bootstrap/Image'
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
 function App() {
 
   const [isAutheticated, setIsAutheticated] = useState(false)
@@ -25,6 +27,9 @@ function App() {
   const setAuth = (isAuth) => {
     setIsAutheticated(isAuth);
   }
+
+
+
   let nav = useNavigate();
   return (
     <>
@@ -99,11 +104,33 @@ function App() {
         </div>
 
         <div>
-          {isAutheticated ? <Button onClick={() => {
+          {/* {!isAutheticated ? <Button onClick={() => {
             setIsAutheticated(false);
             nav("/")
-          }} variant="dark">Logout</Button> :
-            <Button onClick={() => { nav("/login") }} variant="primary">Login</Button>}
+          }} variant="dark" className="rounded-circle">Login</Button> :
+            <Button style={{width:"40px" , height:"40px"}} className="rounded-circle" onClick={() => { nav("/login") }} variant="primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
+            </Button>} */}
+          <Dropdown>
+            <Dropdown.Toggle style={{ background: "transparent", border: "transparent" }} id="dropdown-basic">
+              <div   style={{ width: "40px", height: "40px" }} className="btn rounded-circle" variant="primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-person-circle" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+              </svg>
+              </div>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              {isAutheticated ? <Dropdown.Item onClick={() => {
+                setIsAutheticated(false);
+                localStorage.removeItem("isAuth");
+                nav("/")
+              }}>Logout</Dropdown.Item> :
+                <Dropdown.Item onClick={() => { nav("/login") }}>Login</Dropdown.Item>}
+            </Dropdown.Menu>
+          </Dropdown>
 
         </div>
       </nav>
