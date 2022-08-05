@@ -1,6 +1,6 @@
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
+import { useState } from 'react';
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import {
   BrowserRouter,
@@ -14,7 +14,18 @@ import Request from './component/Request';
 import Users from './component/Users';
 import ResourcesDetails from './component/resources/ResourcesDetails';
 import AddItem from './component/resources/AddItem';
+import Login from './component/login/Login';
+import ContextApi from './component/context/ContextApi'
+import ProtectedRoute from './component/ProtectedRoute';
+import Button from 'react-bootstrap/Button';
 function App() {
+
+  const [isAutheticated, setIsAutheticated] = useState(false)
+
+  const setAuth = (isAuth) => {
+    setIsAutheticated(isAuth);
+  }
+  let nav = useNavigate();
   return (
     <>
       <nav className="navbar navbar-light bg-light">
@@ -86,14 +97,29 @@ function App() {
 
           </a>
         </div>
+
+        <div>
+          {isAutheticated ? <Button onClick={() => {
+            setIsAutheticated(false);
+            nav("/")
+          }} variant="dark">Logout</Button> :
+            <Button onClick={() => { nav("/login") }} variant="primary">Login</Button>}
+
+        </div>
       </nav>
+      <ContextApi.Provider value={{ isAuth: isAutheticated }}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/request" element={ <Request/>} />
-          <Route path="/users" element={ <Users/>} />
-          <Route path="/resource/:id" element={<ResourcesDetails/>} />
-          <Route path="/additem" element={<AddItem/>} />
+
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/request" element={<ProtectedRoute><Request /></ProtectedRoute>} />
+          <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+          <Route path="/resource/:id" element={<ProtectedRoute><ResourcesDetails /></ProtectedRoute>} />
+          <Route path="/additem" element={<ProtectedRoute><AddItem /></ProtectedRoute>} />
+          <Route path="/login" element={<Login setAuth={setAuth} />} />
+
         </Routes>
+
+      </ContextApi.Provider>
     </>
 
   );

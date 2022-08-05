@@ -6,9 +6,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Spinner from 'react-bootstrap/Spinner';
+
 
 const ResourcesDetails = () => {
 
+    const [loading, setloading] = useState(true);
 
     const filterdata = useRef("");
     const [Search, setSearch] = useState("");
@@ -28,9 +31,11 @@ const ResourcesDetails = () => {
                     setResources(res.data)
                 else
                     alert("somethingwent wrong")
+                
             } catch (error) {
                 alert("something went wrong")
             }
+            setloading(false);
         }
 
 
@@ -153,8 +158,11 @@ const ResourcesDetails = () => {
         return
     }
     return (
+        
         <div style={{ width: "80%", margin: "auto" }}>
-
+            { loading ? <Spinner animation="border" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </Spinner>: <>
             <div style={{ display: "flex", alignItems: "center", justifyItems: "" }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
@@ -208,7 +216,8 @@ const ResourcesDetails = () => {
 
                 </div>
             </nav>
-
+            </>
+                }
             {flag && resources != null && <Table columns={columns} data={resources.resource_items} handleDelete={handleDelete} />}
             <ToastContainer position="bottom-center"
                 autoClose={5000}
@@ -219,7 +228,7 @@ const ResourcesDetails = () => {
                 pauseOnFocusLoss
                 draggable
                 pauseOnHover />
-        </div>
+       </div>
     )
 }
 
