@@ -1,12 +1,10 @@
 import './App.css';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import {
-  BrowserRouter,
   Routes,
   Route,
-  Link,
   useNavigate
 } from "react-router-dom";
 import Home from './component/Home';
@@ -17,8 +15,6 @@ import AddItem from './component/resources/AddItem';
 import Login from './component/login/Login';
 import ContextApi from './component/context/ContextApi'
 import ProtectedRoute from './component/ProtectedRoute';
-import Image from 'react-bootstrap/Image'
-import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 function App() {
 
@@ -35,7 +31,7 @@ function App() {
     <>
       <nav className="navbar navbar-light bg-light">
         <div className="container">
-          <a className="navbar-brand" >
+          <a className="navbar-brand" href='/' onClick={()=>{nav("/")}}>
             <svg width="82" height="40" viewBox="0 0 82 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M64.6163 22.6642H56.7898C55.0233 22.6642 53.5945 24.1127 53.5945 25.9103V36.5948C53.5945 38.3851 55.0233 39.8409 56.7898 39.8409H64.6163C66.3827 39.8409 67.8117 38.3926 67.8117 36.5948V25.903C67.8189 24.1127 66.3827 22.6642 64.6163 22.6642ZM64.3865 27.9846H59.4896V29.8989H64.1496V32.2133H59.4896V34.5132H64.3865V36.8059H57.0267V25.692H64.3937V27.9846H64.3865Z" fill="#002A4B" />
               <path d="M31.285 22.6642H28.4917L21.4478 39.8336H25.6053L26.6968 36.9295H33.0658L34.1571 39.8336H38.3146L31.285 22.6642ZM28.025 33.3778L29.8992 28.4286L31.7446 33.3778H28.025Z" fill="#002A4B" />

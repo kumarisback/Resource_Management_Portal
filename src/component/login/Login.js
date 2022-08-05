@@ -1,6 +1,6 @@
-import axios from "axios";
+
 import Button from 'react-bootstrap/Button';
-import React, { useRef, useState, useContext, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
@@ -38,7 +38,7 @@ const Login = (props) => {
                 src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
                 // className="w-full"
                 style={{width:"500px",height:"400px", margin:"auto"}}
-                alt="Sample image"
+                alt="images"
               />
             </div>
             <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
